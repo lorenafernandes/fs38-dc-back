@@ -1,8 +1,8 @@
 import { Sequelize } from "sequelize";
 
-const databaseConnection = new Sequelize("shop_dc", "root", "2025db!@iphDev", {
+const databaseConnection = new Sequelize("shop_dc", "root", "", {
   host: "localhost",
-  port: 3306,
+  port: 3307,
   dialect: "mysql",
   logging: false,
 });

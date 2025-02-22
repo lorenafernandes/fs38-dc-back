@@ -1,8 +1,6 @@
 import express from "express";
-import cors from "cors";
-import User from "./model/User.js";
+import cors from "cors";import User from "./model/User.js";
 import syncTableDatabase from "./database/sync-table-database.js";
-import Order from "./model/Order.js";
 import Product from "./model/Product.js";
 
 const app = express();
@@ -26,9 +24,42 @@ app.post("/product", async (request, response) => {
 });
 
 app.get("/products", async (request, response) => {
-  const products = await Product.findAll();
-  return response.status(200).json(products);
+  try {
+    const products = await Product.findAll();
+    return response.status(200).json(products);
+  } catch (error) {
+    return response.status(500).json(error.message);
+  }
 });
+
+app.delete("/product/:id", async (request, response) => {
+  try {
+    const ProductId = request.params.id;
+    const product = await Product.destroy({ where: { id: ProductId } });
+    if (!product) {
+      return response.status(422).json(`Produto deletado com sucesso`);
+    }
+    await Product.destroy({ where: { id: ProductId } });
+    return response.status(200).json(`Produto deletado com sucesso`);
+  } catch (error) {
+    return response
+      .status(500)
+      .json(`Não foi possível deletar o produto ${error.message}`);
+  }
+  
+});
+
+app.put("/product/:id", async (request, response) => {
+  const productId = request.params.id;
+  const productName = request.body.name;
+  const product = await Product.findOne({ where: { id: productId } });
+  product.set({
+    name: productName,
+  });
+  return response.status(200).json(product);
+});
+
+
 
 const initApp = async () => {
   await syncTableDatabase();
