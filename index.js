@@ -1,4 +1,4 @@
-import express from "express";
+import express, { request } from "express";
 import cors from "cors";import User from "./model/User.js";
 import syncTableDatabase from "./database/sync-table-database.js";
 import Product from "./model/Product.js";
@@ -8,6 +8,7 @@ const port = 3000;
 
 app.use(cors());
 app.use(express.json());
+
 
 app.post("/product", async (request, response) => {
   try {
@@ -48,6 +49,20 @@ app.delete("/product/:id", async (request, response) => {
   }
   
 });
+
+const authMiddleware = (request, response, next) => {
+  try{
+    const jwtToken = request.params.token;
+    if (!jwtToken) {
+      return response.status(401).json("Unauthorized");
+    }
+
+    jwt.verify(jwtToken, secretKey);
+    next();
+  } catch (error) {
+  return response.status(401).json(`Unauthorized. Error: ${error.message}`);
+  }
+};
 
 app.put("/product/:id", async (request, response) => {
   const productId = request.params.id;
