@@ -1,11 +1,17 @@
 import { Sequelize } from "sequelize";
 
-const databaseConnection = new Sequelize("shop_dc", "root", "", {
-  host: "localhost",
-  port: 3307,
-  dialect: "mysql",
-  logging: false,
-});
+const databaseConnection = new Sequelize(
+  "railway", 
+  "root", 
+  "MjsxPyUumypKghsJOKURqkVpoJsuFMni", 
+  {
+    host: "gondola.proxy.rlwy.net",
+    port: 21740,
+    dialect: "mysql",
+    logging: false,
+  }
+);
+
 
 const authenticate = async () => {
   try {

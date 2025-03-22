@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import databaseConnection from "../database/database-connection.js";
+import databaseConnection from "../database/database-connection.js"; 
 
 const User = databaseConnection.define("user", {
   id: {
@@ -9,10 +9,20 @@ const User = databaseConnection.define("user", {
   },
   name: {
     type: DataTypes.STRING,
+    allowNull: false,
   },
   birthdate: {
     type: DataTypes.DATEONLY,
   },
+  email: {
+    type: DataTypes.STRING,
+    unique: true,
+    allowNull: false,
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false
+  }
 });
 
 export default User;
