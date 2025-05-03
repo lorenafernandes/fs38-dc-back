@@ -3,7 +3,7 @@ import cors from "cors";
 import syncTableDatabase from "./database/sync-table-database.js";
 import Product from "./model/Product.js";
 import jwt from "jsonwebtoken";
-import authRouter from "./routes/authorization-routes.js";
+import authRouter, { secretKey } from "./routes/authorization-routes.js";
 
 const app = express();
 const port = 3000;
@@ -16,7 +16,7 @@ app.get ("/jwt", (requeste, response) => {
     { 
       data: "lorenafernandes@hotmail.com"
     },
-    secretkey
+    secretKey
   );
   return response.json(jwtToken);
 });

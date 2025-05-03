@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 const authRouter = express.Router();
-const secretKey =
+export const secretKey =
   "la01le02li03lo04lu05";
 
 authRouter.post("/login", async (request, response) => {
